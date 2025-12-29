@@ -12,7 +12,7 @@ A lightweight and comfortable password manager.
 # Build
 ```bash
 # build
-go build -o dp ./src 
+go build -o bin/dp ./src 
 # develop
 go run ./src
 ```
