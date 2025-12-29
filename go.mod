@@ -1,4 +1,4 @@
-module dispass
+module github.com/dismint/dispass
 
 go 1.25.4
 
