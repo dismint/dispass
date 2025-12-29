@@ -12,17 +12,18 @@ import (
 )
 
 type entryKeyMap struct {
-	Quit  key.Binding
-	Enter key.Binding
+	Quit    key.Binding
+	Enter   key.Binding
+	Migrate key.Binding
 }
 
 func (k entryKeyMap) ShortHelp() []key.Binding {
-	return []key.Binding{k.Quit, k.Enter}
+	return []key.Binding{k.Quit, k.Enter, k.Migrate}
 }
 
 func (k entryKeyMap) FullHelp() [][]key.Binding {
 	return [][]key.Binding{
-		{k.Quit, k.Enter},
+		{k.Quit, k.Enter, k.Migrate},
 	}
 }
 
@@ -34,6 +35,10 @@ var entryKeys = entryKeyMap{
 	Enter: key.NewBinding(
 		key.WithKeys("enter"),
 		key.WithHelp("↵", "enter"),
+	),
+	Migrate: key.NewBinding(
+		key.WithKeys("ctrl+g"),
+		key.WithHelp("ctrl+g", "migrate"),
 	),
 }
 
@@ -127,6 +132,8 @@ func updateEntryModel(m *model, msg tea.Msg) tea.Cmd {
 		case key.Matches(msg, entryKeys.Quit):
 			m.quitting = true
 			cmds = append(cmds, tea.Quit)
+		case key.Matches(msg, entryKeys.Migrate):
+			m.jcpwDecrypt()
 		case key.Matches(msg, entryKeys.Enter):
 			if m.entryModel.confirming {
 				if m.entryModel.passwordInput.Value() != m.entryModel.confirmPasswordInput.Value() {
