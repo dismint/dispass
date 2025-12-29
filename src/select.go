@@ -21,6 +21,7 @@ type searchKeyMap struct {
 type navKeyMap struct {
 	Quit   key.Binding
 	Search key.Binding
+	Clear  key.Binding
 	Nav    key.Binding
 	Copy   key.Binding
 	Edit   key.Binding
@@ -39,7 +40,7 @@ func (k searchKeyMap) ShortHelp() []key.Binding {
 	return []key.Binding{k.Quit, k.Confirm}
 }
 func (k navKeyMap) ShortHelp() []key.Binding {
-	return []key.Binding{k.Quit, k.Search, k.Nav, k.Copy, k.Edit, k.New, k.Del}
+	return []key.Binding{k.Quit, k.Search, k.Clear, k.Nav, k.Copy, k.Edit, k.New, k.Del}
 }
 func (k viewportKeyMap) ShortHelp() []key.Binding {
 	return []key.Binding{k.Quit, k.Back, k.Save, k.Next, k.Prev}
@@ -52,7 +53,7 @@ func (k searchKeyMap) FullHelp() [][]key.Binding {
 }
 func (k navKeyMap) FullHelp() [][]key.Binding {
 	return [][]key.Binding{
-		{k.Quit, k.Search, k.Nav},
+		{k.Quit, k.Search, k.Clear, k.Nav},
 		{k.Copy, k.Edit, k.New, k.Del},
 	}
 }
@@ -81,6 +82,10 @@ var navKeys = navKeyMap{
 	Search: key.NewBinding(
 		key.WithKeys("s", "/"),
 		key.WithHelp("s /", "search"),
+	),
+	Clear: key.NewBinding(
+		key.WithKeys("esc"),
+		key.WithHelp("esc", "clear"),
 	),
 	Nav: key.NewBinding(
 		key.WithKeys("left", "up", "right", "down", "h", "k", "l", "j"),
@@ -273,6 +278,10 @@ func updateSelectModel(m *model, msg tea.Msg) tea.Cmd {
 			m.selectModel.mode = ModeSearch
 			m.selectModel.keys = searchKeys
 			m.selectModel.help.ShowAll = false
+		case m.selectModel.mode == ModeNav && key.Matches(typedMsg, navKeys.Clear):
+			m.selectModel.keyInput.SetValue("")
+			m.selectModel.keyInput.CursorEnd()
+			m.populateSuggestions()
 		case m.selectModel.mode == ModeNav && key.Matches(typedMsg, navKeys.Nav):
 			direction := typedMsg.String()
 			switch direction {

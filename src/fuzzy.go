@@ -48,6 +48,7 @@ func queryTopIDs(query string) []string {
 
 	bq := bleve.NewDisjunctionQuery(prefix, fuzzy, wildcard)
 	searchRequest := bleve.NewSearchRequest(bq)
+	searchRequest.Size = 100
 	searchResult, err := index.Search(searchRequest)
 	if err != nil {
 		log.Errorf("failed to query: %v", err)
