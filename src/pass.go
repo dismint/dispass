@@ -1,0 +1,113 @@
+package main
+
+import (
+	"bytes"
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/rand"
+	"crypto/sha256"
+	"encoding/gob"
+	"errors"
+	"io"
+	"os"
+
+	"github.com/charmbracelet/log"
+)
+
+func secretFromString(password string) []byte {
+	hash := sha256.Sum256([]byte(password))
+	return hash[:]
+}
+
+func encrypt(key, plaintext []byte) ([]byte, error) {
+	// Create AES block
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+
+	aesgcm, err := cipher.NewGCM(block)
+	if err != nil {
+		return nil, err
+	}
+
+	// generate a random nonce
+	nonce := make([]byte, aesgcm.NonceSize())
+	if _, err := io.ReadFull(rand.Reader, nonce); err != nil {
+		return nil, err
+	}
+
+	// encrypt and prepend nonce to ciphertext
+	ciphertext := aesgcm.Seal(nonce, nonce, plaintext, nil)
+	return ciphertext, nil
+}
+
+func decrypt(key, ciphertext []byte) ([]byte, error) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+
+	aesgcm, err := cipher.NewGCM(block)
+	if err != nil {
+		return nil, err
+	}
+
+	nonceSize := aesgcm.NonceSize()
+	if len(ciphertext) < nonceSize {
+		return nil, errors.New("ciphertext too short")
+	}
+
+	nonce, ct := ciphertext[:nonceSize], ciphertext[nonceSize:]
+	plaintext, err := aesgcm.Open(nil, nonce, ct, nil)
+	if err != nil {
+		return nil, errors.New("incorrect password or corrupted data")
+	}
+
+	return plaintext, nil
+}
+
+func (m *model) writePass() {
+	var buf bytes.Buffer
+	enc := gob.NewEncoder(&buf)
+
+	if err := enc.Encode(m.keyToCredInfo); err != nil {
+		log.Errorf("failed to encode: %v", err)
+		panic(err)
+	}
+
+	bytes, err := encrypt(m.secret, buf.Bytes())
+	if err != nil {
+		log.Errorf("failed to encrypt: %v", err)
+		panic(err)
+	}
+
+	if err := os.WriteFile(dataFileName, bytes, 0644); err != nil {
+		log.Errorf("failed to write to %v: %v", dataFileName, err)
+		panic(err)
+	}
+}
+
+func (m *model) readPass() error {
+	dat, err := os.ReadFile(dataFileName)
+	if err != nil {
+		log.Errorf("failed to write to %v: %v", dataFileName, err)
+		panic(err)
+	}
+
+	if len(dat) > 0 {
+		d, err := decrypt(m.secret, dat)
+		if err != nil {
+			log.Warnf("failed to decrypt: %v", err)
+			return err
+		}
+		buf := bytes.NewBuffer(d)
+		dec := gob.NewDecoder(buf)
+		if err = dec.Decode(&m.keyToCredInfo); err != nil {
+			log.Errorf("failed to decode: %v", err)
+			panic(err)
+		}
+	}
+
+	return nil
+}
