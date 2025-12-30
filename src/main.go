@@ -6,7 +6,6 @@ import (
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/log"
-	"golang.design/x/clipboard"
 )
 
 type Screen int
@@ -45,12 +44,6 @@ func initialModel() model {
 }
 
 func (m model) Init() tea.Cmd {
-	err := clipboard.Init()
-	if err != nil {
-		log.Errorf("could not initialize clipboard: %v", err)
-		panic(err)
-	}
-
 	return textinput.Blink
 }
 

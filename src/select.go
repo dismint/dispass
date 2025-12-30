@@ -11,7 +11,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/log"
 	"github.com/google/uuid"
-	"golang.design/x/clipboard"
+	"github.com/atotto/clipboard"
 )
 
 type searchKeyMap struct {
@@ -305,7 +305,7 @@ func updateSelectModel(m *model, msg tea.Msg) tea.Cmd {
 			}
 		case m.selectModel.mode == ModeNav && key.Matches(typedMsg, navKeys.Copy):
 			if credInfo, _, exists := m.getSelectedCredInfo(); exists {
-				clipboard.Write(clipboard.FmtText, []byte(credInfo.Password))
+				clipboard.WriteAll(credInfo.Password)
 				cmds = append(cmds, showNotification("Credentials Copied", MessageLevelSuccess))
 			}
 		case m.selectModel.mode == ModeNav && key.Matches(typedMsg, navKeys.Edit):
