@@ -100,7 +100,7 @@ func (m *Model) updateNav(keyMsg tea.KeyMsg, sm *state.Model) tea.Cmd {
 		if credInfo, _, exists := m.getSelectedCredInfo(sm); exists {
 			clipboard.WriteAll(credInfo.Password)
 			cmds = append(cmds, state.NotificationMsg(
-				"Credentials Copied",
+				"Password Copied",
 				state.MessageLevelSuccess,
 			))
 		}
