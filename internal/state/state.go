@@ -47,7 +47,7 @@ func NotificationMsg(message string, messageLevel MessageLevel) tea.Cmd {
 			}
 			return ShowNotificationMsg(messageStyle.Render(message))
 		},
-		tea.Tick(2*time.Second, func(time.Time) tea.Msg {
+		tea.Tick(1*time.Second, func(time.Time) tea.Msg {
 			return ClearNotificationMsg{}
 		}),
 	)

@@ -21,10 +21,9 @@ func (m *Model) viewViewport(sm *state.Model) string {
 
 func (m *Model) View(sm *state.Model) string {
 	start, end := m.resultPaginator.GetSliceBounds(len(m.topIDs))
-	topPageIDs := m.topIDs[start:end]
 
 	var resultList string
-	for locOnPage, topID := range topPageIDs {
+	for locOnPage, topID := range m.topIDs[start:end] {
 		prefix := " "
 		if locOnPage == m.resultLocOnPage {
 			prefix = uconst.SymbolStyle.Render(">")

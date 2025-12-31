@@ -65,8 +65,8 @@ var searchKeyMap = SearchKeyMap{
 		key.WithHelp("ctrl+c", "quit"),
 	),
 	Confirm: key.NewBinding(
-		key.WithKeys("enter"),
-		key.WithHelp("↵", "confirm"),
+		key.WithKeys("enter", "esc"),
+		key.WithHelp("↵ / esc", "confirm"),
 	),
 }
 var navKeyMap = NavKeyMap{

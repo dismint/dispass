@@ -8,18 +8,17 @@ import (
 )
 
 type KeyMap struct {
-	Quit    key.Binding
-	Enter   key.Binding
-	Migrate key.Binding
+	Quit  key.Binding
+	Enter key.Binding
 }
 
 func (k KeyMap) ShortHelp() []key.Binding {
-	return []key.Binding{k.Quit, k.Enter, k.Migrate}
+	return []key.Binding{k.Quit, k.Enter}
 }
 
 func (k KeyMap) FullHelp() [][]key.Binding {
 	return [][]key.Binding{
-		{k.Quit, k.Enter, k.Migrate},
+		{k.Quit, k.Enter},
 	}
 }
 
@@ -31,10 +30,6 @@ var keyMap = KeyMap{
 	Enter: key.NewBinding(
 		key.WithKeys("enter"),
 		key.WithHelp("↵", "enter"),
-	),
-	Migrate: key.NewBinding(
-		key.WithKeys("ctrl+g"),
-		key.WithHelp("ctrl+g", "migrate"),
 	),
 }
 
