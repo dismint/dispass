@@ -1,4 +1,4 @@
-package main
+package passio
 
 import (
 	"bytes"
@@ -12,15 +12,17 @@ import (
 	"os"
 
 	"github.com/charmbracelet/log"
+	"github.com/dismint/dispass/internal/state"
+	"github.com/dismint/dispass/internal/uconst"
 )
 
-func secretFromString(password string) []byte {
+func SecretFromString(password string) []byte {
 	hash := sha256.Sum256([]byte(password))
 	return hash[:]
 }
 
-func encrypt(key, plaintext []byte) ([]byte, error) {
-	// Create AES block
+func Encrypt(key, plaintext []byte) ([]byte, error) {
+	// create aes block
 	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
@@ -42,7 +44,7 @@ func encrypt(key, plaintext []byte) ([]byte, error) {
 	return ciphertext, nil
 }
 
-func decrypt(key, ciphertext []byte) ([]byte, error) {
+func Decrypt(key, ciphertext []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
@@ -67,43 +69,43 @@ func decrypt(key, ciphertext []byte) ([]byte, error) {
 	return plaintext, nil
 }
 
-func (m *model) writePass() {
+func WriteStateCreds(sm *state.Model) {
 	var buf bytes.Buffer
 	enc := gob.NewEncoder(&buf)
 
-	if err := enc.Encode(m.keyToCredInfo); err != nil {
+	if err := enc.Encode(sm.KeyToCredInfo); err != nil {
 		log.Errorf("failed to encode: %v", err)
 		panic(err)
 	}
 
-	bytes, err := encrypt(m.secret, buf.Bytes())
+	bytes, err := Encrypt(sm.Secret, buf.Bytes())
 	if err != nil {
 		log.Errorf("failed to encrypt: %v", err)
 		panic(err)
 	}
 
-	if err := os.WriteFile(dataFileName, bytes, 0644); err != nil {
-		log.Errorf("failed to write to %v: %v", dataFileName, err)
+	if err := os.WriteFile(uconst.DataFileName, bytes, 0644); err != nil {
+		log.Errorf("failed to write to %v: %v", uconst.DataFileName, err)
 		panic(err)
 	}
 }
 
-func (m *model) readPass() error {
-	dat, err := os.ReadFile(dataFileName)
+func ReadStateCreds(sm *state.Model) error {
+	dat, err := os.ReadFile(uconst.DataFileName)
 	if err != nil {
-		log.Errorf("failed to write to %v: %v", dataFileName, err)
+		log.Errorf("failed to write to %v: %v", uconst.DataFileName, err)
 		panic(err)
 	}
 
 	if len(dat) > 0 {
-		d, err := decrypt(m.secret, dat)
+		d, err := Decrypt(sm.Secret, dat)
 		if err != nil {
 			log.Warnf("failed to decrypt: %v", err)
 			return err
 		}
 		buf := bytes.NewBuffer(d)
 		dec := gob.NewDecoder(buf)
-		if err = dec.Decode(&m.keyToCredInfo); err != nil {
+		if err = dec.Decode(&sm.KeyToCredInfo); err != nil {
 			log.Errorf("failed to decode: %v", err)
 			panic(err)
 		}
