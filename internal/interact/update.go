@@ -51,13 +51,6 @@ func (m *Model) populateTopIDs(sm *state.Model, force bool) {
 		m.lastQuery = query
 		m.resultLocOnPage = 0
 	}
-
-	if credInfo, _, exists := m.getSelectedCredInfo(sm); exists {
-		if m.mode == ModeViewport {
-			return
-		}
-		m.setViewportCredInfo(credInfo, false)
-	}
 }
 
 func (m *Model) updateSearch(keyMsg tea.KeyMsg, sm *state.Model) {
@@ -250,6 +243,10 @@ func (m *Model) Update(msg tea.Msg, sm *state.Model) tea.Cmd {
 	if sm.Dirty {
 		m.populateTopIDs(sm, false)
 		m.populateSuggestions(sm)
+	}
+
+	if credInfo, _, exists := m.getSelectedCredInfo(sm); exists && m.mode != ModeViewport {
+		m.setViewportCredInfo(credInfo, false)
 	}
 
 	return tea.Batch(cmds...)
