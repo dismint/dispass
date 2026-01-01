@@ -128,7 +128,12 @@ func (m *Model) updateNav(keyMsg tea.KeyMsg, sm *state.Model) tea.Cmd {
 				"Credentials Deleted",
 				state.MessageLevelSuccess,
 			))
+			m.populateTopIDs(sm, true)
+			m.populateSuggestions(sm)
 		}
+	default:
+		m.populateTopIDs(sm, false)
+		m.populateSuggestions(sm)
 	}
 
 	return tea.Batch(cmds...)
@@ -203,6 +208,9 @@ func (m *Model) updateViewport(keyMsg tea.KeyMsg, sm *state.Model) tea.Cmd {
 			"Credentials Saved",
 			state.MessageLevelSuccess,
 		))
+
+		m.populateTopIDs(sm, true)
+		m.populateSuggestions(sm)
 	}
 
 	return tea.Batch(cmds...)
@@ -238,11 +246,8 @@ func (m *Model) Update(msg tea.Msg, sm *state.Model) tea.Cmd {
 		}
 	}
 
-	if _, ok := msg.(tea.KeyMsg); ok {
-		m.populateTopIDs(sm, false)
-	}
 	if sm.Dirty {
-		m.populateTopIDs(sm, true)
+		m.populateTopIDs(sm, false)
 		m.populateSuggestions(sm)
 	}
 
