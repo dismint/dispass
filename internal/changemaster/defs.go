@@ -1,4 +1,4 @@
-package entry
+package changemaster
 
 import (
 	"github.com/charmbracelet/bubbles/help"
@@ -10,15 +10,16 @@ import (
 type KeyMap struct {
 	Quit  key.Binding
 	Enter key.Binding
+	Back  key.Binding
 }
 
 func (k KeyMap) ShortHelp() []key.Binding {
-	return []key.Binding{k.Quit, k.Enter}
+	return []key.Binding{k.Quit, k.Enter, k.Back}
 }
 
 func (k KeyMap) FullHelp() [][]key.Binding {
 	return [][]key.Binding{
-		{k.Quit, k.Enter},
+		{k.Quit, k.Enter, k.Back},
 	}
 }
 
@@ -30,6 +31,10 @@ var keyMap = KeyMap{
 	Enter: key.NewBinding(
 		key.WithKeys("enter"),
 		key.WithHelp("↵", "enter"),
+	),
+	Back: key.NewBinding(
+		key.WithKeys("esc"),
+		key.WithHelp("esc", "back"),
 	),
 }
 
@@ -48,7 +53,7 @@ func Initial() Model {
 	passwordInput.CharLimit = -1
 	passwordInput.EchoMode = textinput.EchoPassword
 	passwordInput.EchoCharacter = uconst.PasswordChar
-	passwordInput.Prompt = "Master  » "
+	passwordInput.Prompt = "New Master » "
 	passwordInput.Cursor.Style = uconst.SymbolStyle
 	passwordInput.PromptStyle = uconst.SymbolStyle
 	passwordInput.TextStyle = uconst.TextStyle
@@ -57,7 +62,7 @@ func Initial() Model {
 	confirmPasswordInput.CharLimit = -1
 	confirmPasswordInput.EchoMode = textinput.EchoPassword
 	confirmPasswordInput.EchoCharacter = uconst.PasswordChar
-	confirmPasswordInput.Prompt = "Confirm » "
+	confirmPasswordInput.Prompt = "Confirm    » "
 	confirmPasswordInput.Cursor.Style = uconst.SymbolStyle
 	confirmPasswordInput.PromptStyle = uconst.SymbolStyle
 	confirmPasswordInput.TextStyle = uconst.TextStyle

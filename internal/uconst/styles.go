@@ -9,7 +9,6 @@ import (
 
 var (
 	PasswordChar       = '▪'
-	PromptString       = "$ "
 	PaginatorDotString = "▪"
 )
 

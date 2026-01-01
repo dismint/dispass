@@ -128,6 +128,9 @@ func (m *Model) updateNav(keyMsg tea.KeyMsg, sm *state.Model) tea.Cmd {
 			m.populateTopIDs(sm, true)
 			m.populateSuggestions(sm)
 		}
+	case key.Matches(keyMsg, navKeyMap.ChangeMaster):
+		sm.Screen = state.ChangeMasterScreen
+		sm.Dirty = true
 	}
 
 	return tea.Batch(cmds...)

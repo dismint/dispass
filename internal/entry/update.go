@@ -51,12 +51,20 @@ func (m *Model) Update(msg tea.Msg, sm *state.Model) tea.Cmd {
 			if m.confirming {
 				// data does not exist and we confirmed password, try decrypting
 				if m.passwordInput.Value() != m.confirmPasswordInput.Value() {
-					break
-				}
-				pcCmd, err := m.passwordComplete(true, sm)
-				if err != nil {
-					cmds = append(cmds, pcCmd)
-					break
+					cmds = append(cmds, state.NotificationMsg(
+						"Passwords do not match",
+						state.MessageLevelError,
+					))
+					m.passwordInput.SetValue("")
+					m.confirmPasswordInput.SetValue("")
+					m.confirmPasswordInput.Blur()
+					cmds = append(cmds, m.passwordInput.Focus())
+					m.confirming = false
+				} else {
+					pcCmd, err := m.passwordComplete(true, sm)
+					if err != nil {
+						cmds = append(cmds, pcCmd)
+					}
 				}
 			} else {
 				// first entry, check which scenario we're in
@@ -65,7 +73,6 @@ func (m *Model) Update(msg tea.Msg, sm *state.Model) tea.Cmd {
 					pcCmd, err := m.passwordComplete(false, sm)
 					if err != nil {
 						cmds = append(cmds, pcCmd)
-						break
 					}
 				} else if os.IsNotExist(err) {
 					// data does not exist, confirm password
@@ -77,6 +84,10 @@ func (m *Model) Update(msg tea.Msg, sm *state.Model) tea.Cmd {
 				}
 			}
 		}
+	}
+
+	if sm.Dirty {
+		cmds = append(cmds, m.passwordInput.Focus())
 	}
 
 	return tea.Batch(cmds...)

@@ -14,14 +14,15 @@ type SearchKeyMap struct {
 	Confirm key.Binding
 }
 type NavKeyMap struct {
-	Quit   key.Binding
-	Search key.Binding
-	Clear  key.Binding
-	Nav    key.Binding
-	Copy   key.Binding
-	Edit   key.Binding
-	New    key.Binding
-	Del    key.Binding
+	Quit         key.Binding
+	Search       key.Binding
+	Clear        key.Binding
+	Nav          key.Binding
+	Copy         key.Binding
+	Edit         key.Binding
+	New          key.Binding
+	Del          key.Binding
+	ChangeMaster key.Binding
 }
 type ViewportKeyMap struct {
 	Quit key.Binding
@@ -35,7 +36,17 @@ func (k SearchKeyMap) ShortHelp() []key.Binding {
 	return []key.Binding{k.Quit, k.Confirm}
 }
 func (k NavKeyMap) ShortHelp() []key.Binding {
-	return []key.Binding{k.Quit, k.Search, k.Clear, k.Nav, k.Copy, k.Edit, k.New, k.Del}
+	return []key.Binding{
+		k.Quit,
+		k.Search,
+		k.Clear,
+		k.Nav,
+		k.Copy,
+		k.Edit,
+		k.New,
+		k.Del,
+		k.ChangeMaster,
+	}
 }
 func (k ViewportKeyMap) ShortHelp() []key.Binding {
 	return []key.Binding{k.Quit, k.Back, k.Save, k.Next, k.Prev}
@@ -48,8 +59,9 @@ func (k SearchKeyMap) FullHelp() [][]key.Binding {
 }
 func (k NavKeyMap) FullHelp() [][]key.Binding {
 	return [][]key.Binding{
-		{k.Quit, k.Search, k.Clear, k.Nav},
-		{k.Copy, k.Edit, k.New, k.Del},
+		{k.Quit, k.Search, k.Clear},
+		{k.Nav, k.Copy, k.Edit},
+		{k.New, k.Del, k.ChangeMaster},
 	}
 }
 func (k ViewportKeyMap) FullHelp() [][]key.Binding {
@@ -101,6 +113,10 @@ var navKeyMap = NavKeyMap{
 	Del: key.NewBinding(
 		key.WithKeys("d"),
 		key.WithHelp("d", "delete"),
+	),
+	ChangeMaster: key.NewBinding(
+		key.WithKeys("p"),
+		key.WithHelp("p", "change master"),
 	),
 }
 var viewportKeyMap = ViewportKeyMap{

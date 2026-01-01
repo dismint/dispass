@@ -14,6 +14,7 @@ type Screen int
 const (
 	EntryScreen Screen = iota
 	InteractScreen
+	ChangeMasterScreen
 )
 
 type MessageLevel int
@@ -73,7 +74,7 @@ func Initial() Model {
 		// Notification
 		// Quitting
 
-		// Dirty
+		Dirty: true,
 	}
 }
 

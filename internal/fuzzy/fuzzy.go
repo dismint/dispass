@@ -71,7 +71,6 @@ func QueryTopIDs(sm *state.Model, query string) []string {
 
 	orderedIDs := make([]string, 0)
 	for _, result := range searchResult.Hits {
-		log.Warnf("%v", result.Score)
 		orderedIDs = append(orderedIDs, result.ID)
 	}
 	return orderedIDs
