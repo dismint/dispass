@@ -74,27 +74,23 @@ func WriteStateCreds(sm *state.Model) {
 	enc := gob.NewEncoder(&buf)
 
 	if err := enc.Encode(sm.KeyToCredInfo); err != nil {
-		log.Errorf("failed to encode: %v", err)
-		panic(err)
+		log.Fatalf("failed to encode: %v", err)
 	}
 
 	bytes, err := Encrypt(sm.Secret, buf.Bytes())
 	if err != nil {
-		log.Errorf("failed to encrypt: %v", err)
-		panic(err)
+		log.Fatalf("failed to encrypt: %v", err)
 	}
 
 	if err := os.WriteFile(uconst.DataFileName, bytes, 0644); err != nil {
-		log.Errorf("failed to write to %v: %v", uconst.DataFileName, err)
-		panic(err)
+		log.Fatalf("failed to write to %v: %v", uconst.DataFileName, err)
 	}
 }
 
 func ReadStateCreds(sm *state.Model) error {
 	dat, err := os.ReadFile(uconst.DataFileName)
 	if err != nil {
-		log.Errorf("failed to write to %v: %v", uconst.DataFileName, err)
-		panic(err)
+		log.Fatalf("failed to write to %v: %v", uconst.DataFileName, err)
 	}
 
 	if len(dat) > 0 {
@@ -106,8 +102,7 @@ func ReadStateCreds(sm *state.Model) error {
 		buf := bytes.NewBuffer(d)
 		dec := gob.NewDecoder(buf)
 		if err = dec.Decode(&sm.KeyToCredInfo); err != nil {
-			log.Errorf("failed to decode: %v", err)
-			panic(err)
+			log.Fatalf("failed to decode: %v", err)
 		}
 	}
 
