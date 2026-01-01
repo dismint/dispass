@@ -60,7 +60,7 @@ func (m *Model) populateTopIDs(sm *state.Model, force bool) {
 	}
 }
 
-func (m *Model) updateSearch(keyMsg tea.KeyMsg) {
+func (m *Model) updateSearch(keyMsg tea.KeyMsg, sm *state.Model) {
 	switch {
 	case key.Matches(keyMsg, searchKeyMap.Confirm):
 		m.keyInput.Blur()
@@ -68,6 +68,8 @@ func (m *Model) updateSearch(keyMsg tea.KeyMsg) {
 		m.keyMap = navKeyMap
 		m.helpModel.ShowAll = true
 	}
+	m.populateTopIDs(sm, false)
+	m.populateSuggestions(sm)
 }
 
 func (m *Model) updateNav(keyMsg tea.KeyMsg, sm *state.Model) tea.Cmd {
@@ -82,6 +84,8 @@ func (m *Model) updateNav(keyMsg tea.KeyMsg, sm *state.Model) tea.Cmd {
 	case key.Matches(keyMsg, navKeyMap.Clear):
 		m.keyInput.SetValue("")
 		m.keyInput.CursorEnd()
+		m.populateTopIDs(sm, true)
+		m.populateSuggestions(sm)
 	case key.Matches(keyMsg, navKeyMap.Nav):
 		switch keyMsg.String() {
 		case "left", "h":
@@ -131,9 +135,6 @@ func (m *Model) updateNav(keyMsg tea.KeyMsg, sm *state.Model) tea.Cmd {
 			m.populateTopIDs(sm, true)
 			m.populateSuggestions(sm)
 		}
-	default:
-		m.populateTopIDs(sm, false)
-		m.populateSuggestions(sm)
 	}
 
 	return tea.Batch(cmds...)
@@ -238,7 +239,7 @@ func (m *Model) Update(msg tea.Msg, sm *state.Model) tea.Cmd {
 			sm.Quitting = true
 			cmds = append(cmds, tea.Quit)
 		case m.mode == ModeSearch:
-			m.updateSearch(typedMsg)
+			m.updateSearch(typedMsg, sm)
 		case m.mode == ModeNav:
 			cmds = append(cmds, m.updateNav(typedMsg, sm))
 		case m.mode == ModeViewport:
