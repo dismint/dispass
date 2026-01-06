@@ -51,6 +51,10 @@ func (m *Model) Update(msg tea.Msg, sm *state.Model) tea.Cmd {
 					cmds = append(cmds, m.passwordInput.Focus())
 					m.confirming = false
 				} else {
+					cmds = append(cmds, state.NotificationMsg(
+						"Updated master password",
+						state.MessageLevelSuccess,
+					))
 					m.passwordComplete(sm)
 				}
 			} else if m.passwordInput.Value() != "" {
