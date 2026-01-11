@@ -1,6 +1,4 @@
 <div align="center">
-  
-# Dispass
 
 <img width="80%" alt="dispass logo" src="https://github.com/user-attachments/assets/810a6604-91fd-4b5b-8e28-58e1ffbec0fa" />
 
