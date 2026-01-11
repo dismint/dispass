@@ -1,17 +1,16 @@
 <div align="center">
 
-<img width="80%" alt="dispass logo" src="https://github.com/user-attachments/assets/810a6604-91fd-4b5b-8e28-58e1ffbec0fa" />
+<img width="60%" alt="dispass logo" src="https://github.com/user-attachments/assets/8429bccc-86c1-4eb0-8bed-689dcd1b0bd4" />
 
-
+&nbsp;
 
 [![Email](https://img.shields.io/badge/EMAIL-mintjjc%40gmail.com-93BFCF?style=flat&logoSize=auto&labelColor=EEE9DA)](mailto:mintjjc@gmail.com)
 
-[Overview](#overview) • [Build](#build) • [Migration](#migration)
+A lightweight and comfortable CLI password manager, written in Go and powered by [Bubble Tea](https://github.com/charmbracelet/bubbletea)
 
 </div>
 
-# Overview
-A lightweight and comfortable password manager.
+---
 
 # Build
 ```bash
