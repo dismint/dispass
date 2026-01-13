@@ -1,4 +1,5 @@
 *.dat
 *.log
+*.toml
 index/
 bin/
