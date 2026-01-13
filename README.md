@@ -14,6 +14,10 @@ A lightweight and comfortable CLI password manager, written in Go and powered by
 
 ---
 
+<div align="center">
+  <img width="80%" alt="dispass demo" src="https://github.com/user-attachments/assets/c2a4e7ba-d485-4bc1-bd3c-3f8d14eff3e7" />
+</div>
+
 # ⚙️ Configuration
 
 You can configure `dispass` with a `dispass.toml` located either in the working directory or at `$HOME/.config/dispass`
