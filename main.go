@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	// load logging file
 	logFd, err := os.OpenFile(
 		uconst.LogFileName,
 		os.O_CREATE|os.O_WRONLY|os.O_APPEND,
@@ -20,6 +21,9 @@ func main() {
 	}
 	defer logFd.Close()
 	log.SetOutput(logFd)
+
+	// load config file
+	uconst.LoadConfig()
 
 	if _, err := tea.NewProgram(master.Initial()).Run(); err != nil {
 		log.Fatalf("could not start program: %v", err)

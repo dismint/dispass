@@ -33,58 +33,22 @@ const (
 )
 
 var (
-	SymbolStyle = lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{
-		Light: lostCentury10,
-		Dark:  lostCentury12,
-	})
-	TextStyle = lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{
-		Light: lostCentury10,
-		Dark:  lostCentury11,
-	})
-	HelpKeyStyle = lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{
-		Light: lostCentury10,
-		Dark:  lostCentury15,
-	})
-	HelpDescStyle = lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{
-		Light: lostCentury10,
-		Dark:  lostCentury16,
-	})
-	HelpSeparatorStyle = lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{
-		Light: lostCentury10,
-		Dark:  lostCentury14,
-	})
-	BorderColor = lipgloss.AdaptiveColor{
-		Light: lostCentury10,
-		Dark:  lostCentury12,
-	}
+	SymbolStyle              lipgloss.Style
+	TextStyle                lipgloss.Style
+	HelpKeyStyle             lipgloss.Style
+	HelpDescStyle            lipgloss.Style
+	HelpSeparatorStyle       lipgloss.Style
+	MessageLevelErrorStyle   lipgloss.Style
+	MessageLevelSuccessStyle lipgloss.Style
+	MessageLevelNotifStyle   lipgloss.Style
+	BorderColor              lipgloss.AdaptiveColor
+	HelpStyles               help.Styles
 )
-
-var HelpStyles = help.Styles{
-	ShortKey:       HelpKeyStyle,
-	ShortDesc:      HelpDescStyle,
-	ShortSeparator: HelpSeparatorStyle,
-	FullKey:        HelpKeyStyle,
-	FullDesc:       HelpDescStyle,
-	FullSeparator:  HelpSeparatorStyle,
-}
 
 var (
 	ViewStyle         = lipgloss.NewStyle().Padding(1, 2).Width(50)
 	ViewportViewStyle = lipgloss.NewStyle().Padding(0, 1).Width(44).
 				Border(lipgloss.RoundedBorder()).BorderForeground(BorderColor)
-	MessageBaseStyle       = lipgloss.NewStyle().Padding(0, 1)
-	MessageLevelErrorStyle = MessageBaseStyle.Foreground(lipgloss.AdaptiveColor{
-		Light: lostCentury10,
-		Dark:  lostCentury2,
-	})
-	MessageLevelSuccessStyle = MessageBaseStyle.Foreground(lipgloss.AdaptiveColor{
-		Light: lostCentury10,
-		Dark:  lostCentury12,
-	})
-	MessageLevelNotifStyle = MessageBaseStyle.Foreground(lipgloss.AdaptiveColor{
-		Light: lostCentury10,
-		Dark:  lostCentury13,
-	})
 )
 
 func NewTextInput(prompt string) textinput.Model {
