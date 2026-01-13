@@ -25,6 +25,12 @@ A lightweight and comfortable CLI password manager, written in Go and powered by
 - 🔄 **Easy migration**: Import seamlessly from existing password managers.
 - 🎨 **Fully customizable**: Tweak colors and appearance to match your terminal setup.
 
+# 🔧 Installation
+
+```bash
+go install github.com/dismint/dispass@latest
+```
+
 # ⚙️ Configuration
 
 You can configure `dispass` with a `dispass.toml` located either in the working directory or at `$HOME/.config/dispass`
