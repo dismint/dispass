@@ -20,17 +20,10 @@ A lightweight and comfortable CLI password manager, written in Go and powered by
 
 # ⚡ Features
 
-### 🔐 **Local-first password storage**  
-All credentials live in a single encrypted file.
-
-### ⚡ **Instant search & autocomplete**  
-A built-in index for speedy password finding.
-
-### 🔄 **Easy migration**  
-Import seamlessly from existing password managers.
-
-### 🎨 **Fully customizable**  
-Tweak colors and appearance to match your terminal setup.
+- 🔐 **Local-first password storage**: All credentials live in a single encrypted file.
+- ⚡ **Instant search & autocomplete**: A built-in index for speedy password finding.
+- 🔄 **Easy migration**: Import seamlessly from existing password managers.
+- 🎨 **Fully customizable**: Tweak colors and appearance to match your terminal setup.
 
 # ⚙️ Configuration
 
