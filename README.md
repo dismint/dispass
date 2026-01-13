@@ -14,13 +14,42 @@ A lightweight and comfortable CLI password manager, written in Go and powered by
 
 ---
 
-# Build
-```bash
-# build
-go build -o bin/dp ./src 
-# develop
-go run ./src
+# ⚙️ Configuration
+
+You can configure `dispass` with a `dispass.toml` located either in the working directory or at `$HOME/.config/dispass`
+
+```toml
+# dispass.toml default configuration
+
+[colors.light]
+symbol          = "#4b726e"
+text            = "#4b3d44"
+help_key        = "#847875"
+help_desc       = "#574852"
+help_sep        = "#ab9b8e"
+border          = "#4b726e"
+message_error   = "#79444a"
+message_success = "#4b726e"
+message_notif   = "#8caba1"
+
+[colors.dark]
+symbol          = "#8caba1"
+text            = "#d2c9a5"
+help_key        = "#847875"
+help_desc       = "#ab9b8e"
+help_sep        = "#574852" 
+border          = "#8caba1"
+message_error   = "#c77b58"
+message_success = "#8caba1"
+message_notif   = "#4b726e"
 ```
 
-# Migration
-Please use the migration option on the entry page to migrate from existing password managers.
+# 🔨 Development
+
+`dispass` is organized as a standard Go project and can be built as such:
+```bash
+# build to ./dispass
+go build .
+# develop
+go run .
+```
