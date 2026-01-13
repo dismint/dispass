@@ -4,7 +4,9 @@
 
 &nbsp;
 
-[![Email](https://img.shields.io/badge/EMAIL-mintjjc%40gmail.com-93BFCF?style=flat&logoSize=auto&labelColor=EEE9DA)](mailto:mintjjc@gmail.com)
+[![Email](https://img.shields.io/badge/EMAIL-mintjjc%40gmail.com-4b726e?style=flat&labelColor=4d4539)](mailto:mintjjc@gmail.com)
+[![Static Badge](https://img.shields.io/badge/WEBSITE-mintjjc%40gmail.com-77743b?style=flat&labelColor=4d4539)](https://www.dismint.dev/)
+[![Go](https://github.com/dismint/dispass/actions/workflows/go.yml/badge.svg)](https://github.com/dismint/dispass/actions/workflows/go.yml)
 
 A lightweight and comfortable CLI password manager, written in Go and powered by [Bubble Tea](https://github.com/charmbracelet/bubbletea)
 
