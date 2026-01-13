@@ -19,23 +19,23 @@ func LoadConfig() {
 	}
 
 	// colors
-	viper.SetDefault("colors.light.symbol", lostCentury10)
+	viper.SetDefault("colors.light.symbol", lostCentury13)
 	viper.SetDefault("colors.dark.symbol", lostCentury12)
-	viper.SetDefault("colors.light.text", lostCentury10)
+	viper.SetDefault("colors.light.text", lostCentury5)
 	viper.SetDefault("colors.dark.text", lostCentury11)
-	viper.SetDefault("colors.light.help_key", lostCentury10)
+	viper.SetDefault("colors.light.help_key", lostCentury15)
 	viper.SetDefault("colors.dark.help_key", lostCentury15)
-	viper.SetDefault("colors.light.help_desc", lostCentury10)
+	viper.SetDefault("colors.light.help_desc", lostCentury14)
 	viper.SetDefault("colors.dark.help_desc", lostCentury16)
-	viper.SetDefault("colors.light.help_sep", lostCentury10)
+	viper.SetDefault("colors.light.help_sep", lostCentury16)
 	viper.SetDefault("colors.dark.help_sep", lostCentury14)
-	viper.SetDefault("colors.light.border", lostCentury10)
+	viper.SetDefault("colors.light.border", lostCentury13)
 	viper.SetDefault("colors.dark.border", lostCentury12)
-	viper.SetDefault("colors.light.message_error", lostCentury10)
+	viper.SetDefault("colors.light.message_error", lostCentury4)
 	viper.SetDefault("colors.dark.message_error", lostCentury2)
-	viper.SetDefault("colors.light.message_success", lostCentury10)
+	viper.SetDefault("colors.light.message_success", lostCentury13)
 	viper.SetDefault("colors.dark.message_success", lostCentury12)
-	viper.SetDefault("colors.light.message_notif", lostCentury10)
+	viper.SetDefault("colors.light.message_notif", lostCentury12)
 	viper.SetDefault("colors.dark.message_notif", lostCentury13)
 
 	// set styles
