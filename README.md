@@ -5,7 +5,7 @@
 &nbsp;
 
 [![Email](https://img.shields.io/badge/EMAIL-mintjjc%40gmail.com-4b726e?style=flat&labelColor=4d4539)](mailto:mintjjc@gmail.com)
-[![Static Badge](https://img.shields.io/badge/WEBSITE-mintjjc%40gmail.com-77743b?style=flat&labelColor=4d4539)](https://www.dismint.dev/)
+[![Static Badge](https://img.shields.io/badge/WEBSITE-dismint.dev-77743b?style=flat&labelColor=4d4539)](https://www.dismint.dev/)
 [![Go](https://github.com/dismint/dispass/actions/workflows/go.yml/badge.svg)](https://github.com/dismint/dispass/actions/workflows/go.yml)
 
 A lightweight and comfortable CLI password manager, written in Go and powered by [Bubble Tea](https://github.com/charmbracelet/bubbletea)
@@ -17,6 +17,20 @@ A lightweight and comfortable CLI password manager, written in Go and powered by
 <div align="center">
   <img width="80%" alt="dispass demo" src="https://github.com/user-attachments/assets/c2a4e7ba-d485-4bc1-bd3c-3f8d14eff3e7" />
 </div>
+
+# ⚡ Features
+
+### 🔐 **Local-first password storage**  
+All credentials live in a single encrypted file.
+
+### ⚡ **Instant search & autocomplete**  
+A built-in index for speedy password finding.
+
+### 🔄 **Easy migration**  
+Import seamlessly from existing password managers.
+
+### 🎨 **Fully customizable**  
+Tweak colors and appearance to match your terminal setup.
 
 # ⚙️ Configuration
 
