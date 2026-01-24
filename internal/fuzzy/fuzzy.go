@@ -52,7 +52,7 @@ func QueryTopIDs(sm *state.Model, query string) []string {
 	} else {
 		searchRequest = bleve.NewSearchRequest(bleve.NewMatchAllQuery())
 	}
-	searchRequest.Size = 100
+	searchRequest.Size = 800
 	searchResult, err := sm.Index.Search(searchRequest)
 	if query == "" {
 		sort.Slice(searchResult.Hits, func(i, j int) bool {
