@@ -71,6 +71,7 @@ func (m *Model) updateNav(keyMsg tea.KeyMsg, sm *state.Model) tea.Cmd {
 	switch {
 	case key.Matches(keyMsg, navKeyMap.Search):
 		cmds = append(cmds, m.keyInput.Focus())
+		m.keyInput.SetValue("")
 		m.mode = ModeSearch
 		m.keyMap = searchKeyMap
 		m.helpModel.ShowAll = false
