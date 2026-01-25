@@ -12,18 +12,27 @@ import (
 )
 
 func InitFuzzy(sm *state.Model) {
-	err := os.RemoveAll(uconst.BleveDirName)
-	if err != nil {
-		log.Fatalf("failed to remove dir: %v", err)
-	}
+	var err error
 
-	mapping := bleve.NewIndexMapping()
-	sm.Index, err = bleve.New(uconst.BleveDirName, mapping)
-	if err != nil {
-		log.Fatalf("error creating belve: %v", err)
-	}
-	for key, ci := range sm.KeyToCredInfo {
-		sm.Index.Index(key, ci)
+	if _, statErr := os.Stat(uconst.BleveDirName); statErr == nil {
+		sm.Index, err = bleve.Open(uconst.BleveDirName)
+		if err != nil {
+			log.Fatalf("error opening bleve index: %v", err)
+		}
+	} else if os.IsNotExist(statErr) {
+		mapping := bleve.NewIndexMapping()
+		sm.Index, err = bleve.New(uconst.BleveDirName, mapping)
+		if err != nil {
+			log.Fatalf("error creating bleve index: %v", err)
+		}
+
+		for key, ci := range sm.KeyToCredInfo {
+			if err := sm.Index.Index(key, ci); err != nil {
+				log.Printf("failed to index %s: %v", key, err)
+			}
+		}
+	} else {
+		log.Fatalf("failed to stat bleve dir: %v", statErr)
 	}
 }
 
