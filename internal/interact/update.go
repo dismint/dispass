@@ -76,10 +76,10 @@ func (m *Model) updateNav(keyMsg tea.KeyMsg, sm *state.Model) tea.Cmd {
 		m.keyMap = searchKeyMap
 		m.helpModel.ShowAll = false
 	case key.Matches(keyMsg, navKeyMap.Clear):
-		m.keyInput.SetValue("")
-		m.keyInput.CursorEnd()
-		m.populateTopIDs(sm, true)
-		m.populateSuggestions(sm)
+		cmds = append(cmds, m.keyInput.Focus())
+		m.mode = ModeSearch
+		m.keyMap = searchKeyMap
+		m.helpModel.ShowAll = false
 	case key.Matches(keyMsg, navKeyMap.Nav):
 		switch keyMsg.String() {
 		case "left", "h":
